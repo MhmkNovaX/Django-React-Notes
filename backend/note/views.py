@@ -20,7 +20,7 @@ class NoteListAndCreate(APIView):
         q = Q(deleted=False, owner=request.user)
         # Search in detail
         if request.GET.get("search"):
-            q = q & Q(title__icontains=request.GET.get("search"))
+            q = q & Q(title__icontains=request.GET["search"])
         notes = Note.objects.filter(q)
         if notes:
             context["notes"] = NoteSerializer(instance=notes, many=True).data
@@ -35,7 +35,7 @@ class NoteListAndCreate(APIView):
         context = {}
         try:
             note = Note(
-                title=request.data.get("title"),
+                title=request.POST.get("title"),
                 detail=request.data.get("detail"),
                 owner_id=request.user.id,
             )
