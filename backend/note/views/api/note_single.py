@@ -2,7 +2,7 @@ from note.views.imports import *
 
 
 class NoteSingle(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, pk, *args, **kwargs):
         context = {}

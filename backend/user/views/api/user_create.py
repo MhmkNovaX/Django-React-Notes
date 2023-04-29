@@ -9,7 +9,7 @@ class UserCreate(APIView):
         context = {}
         user = User(
             username=request.data.get('username'),
-            password=request.data.get('password')
+            password=make_password(request.data.get('password'))
         )
         user.save()
         context['user'] = UserSerializer(user).data

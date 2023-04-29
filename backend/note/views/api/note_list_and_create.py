@@ -2,11 +2,11 @@ from note.views.imports import *
 
 
 class NoteListAndCreate(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
         context = {}
-        notes = Note.objects.all()
+        notes = Note.objects.filter(owner=request.user)
         if notes:
             context["notes"] = NoteSerializer(notes, many=True).data
             status_code = HTTP_200_OK
@@ -19,7 +19,7 @@ class NoteListAndCreate(APIView):
     def post(self, request, *args, **kwargs):
         context = {}
         note = Note(
-            title=request.POST.get("title"),
+            title=request.data.get("title"),
             detail=request.data.get("detail"),
             owner=request.user,
         )
