@@ -1,8 +1,6 @@
-from django.urls import path
-from .views import NoteListAndCreate, NoteSingle
+from django.urls import path, include
+
 
 urlpatterns = [
-    # APIs
-    path("api/", NoteListAndCreate.as_view(), name="NoteListAndCreate"),
-    path("api/<int:pk>/", NoteSingle.as_view(), name="NoteSingle"),
+    path('api/', include('note.views.api.urls')),
 ]
